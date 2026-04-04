@@ -91,32 +91,32 @@
         <form action="/apply" method="POST" class="row g-4">
           <div class="col-md-12">
             <label>Full Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Siapa nama kamu?" required>
+            <input type="text" name="name" value="<%= old.name || '' %>" class="form-control" placeholder="Siapa nama kamu?">
           </div>
 
           <div class="col-md-6">
             <label>Age</label>
-            <input type="number" name="age" class="form-control" placeholder="Umur kamu" required>
+            <input type="number" name="age" value="<%= old.age || '' %>" class="form-control" placeholder="Umur kamu">
           </div>
 
           <div class="col-md-6">
             <label>NIK</label>
-            <input type="text" name="nik" class="form-control" placeholder="Nomor KTP" required>
+            <input type="text" name="nik" value="<%= old.nik || '' %>" class="form-control" placeholder="Nomor KTP">
           </div>
 
           <div class="col-md-6">
             <label>Email Address</label>
-            <input type="email" name="email" class="form-control" placeholder="email@keren.com" required>
+            <input type="email" name="email" value="<%= old.email || '' %>" class="form-control" placeholder="email@keren.com">
           </div>
 
           <div class="col-md-6">
             <label>WhatsApp</label>
-            <input type="tel" name="whatsapp" class="form-control" placeholder="62812xxxx" required>
+            <input type="tel" name="whatsapp" value="<%= old.whatsapp || '' %>" class="form-control" placeholder="62812xxxx">
           </div>
 
           <div class="col-md-12">
             <label>Apply for Role</label>
-            <select name="role" class="form-select" required>
+            <select name="role" class="form-select">
               <option value="" disabled selected>Pilih role yang cocok...</option>
               <option value="Frontend Developer">Frontend Developer</option>
               <option value="UI/UX Designer">UI/UX Designer</option>
@@ -127,7 +127,7 @@
 
           <div class="col-md-12">
             <label>Resume / Portfolio Link</label>
-            <input type="url" name="resume" class="form-control" placeholder="https://drive.google.com/..." required>
+            <input type="url" name="resume" value="<%= old.resume || '' %>" class="form-control" placeholder="https://drive.google.com/...">
           </div>
 
           <div class="col-12 mt-5">
@@ -151,6 +151,32 @@
       if (result.isConfirmed) {
         window.location.href = '/';
       }
+    });
+  </script>
+<% } %>
+
+<% if (status === 'validation-error') { %>
+  <script>
+    Swal.fire({
+      title: 'Validasi Gagal!',
+      html: `<ul style="text-align: left;">
+              <% errors.forEach(function(error) { %>
+                <li><%= error.msg %></li>
+              <% }); %>
+            </ul>`,
+      icon: 'error',
+      confirmButtonColor: '#2d3436'
+    });
+  </script>
+<% } %>
+
+<% if (status === 'error') { %>
+  <script>
+    Swal.fire({
+      title: 'System Error!',
+      text: 'Maaf, terjadi kesalahan pada server. Coba lagi nanti.',
+      icon: 'warning',
+      confirmButtonColor: '#2d3436'
     });
   </script>
 <% } %>
